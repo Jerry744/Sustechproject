@@ -38,6 +38,11 @@ public class ChariotChessComponent extends ChessComponent {
     }
 
     @Override
+    public String toString() {
+        return getChessColor().equals(ChessColor.BLACK)?"C":"c";
+    }
+
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 

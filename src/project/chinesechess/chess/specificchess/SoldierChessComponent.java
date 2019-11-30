@@ -8,8 +8,8 @@ import project.chinesechess.chessboard.ChessboardPoint;
 
 import java.awt.*;
 
-public class BingChessComponent extends ChessComponent {
-    public BingChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color) {
+public class SoldierChessComponent extends ChessComponent {
+    public SoldierChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color) {
         super(chessboardPoint, location, color);
     }
 
@@ -41,6 +41,11 @@ public class BingChessComponent extends ChessComponent {
         }
     }
 
+    @Override
+    public String toString() {
+        return getChessColor().equals(ChessColor.BLACK)?"S":"s";
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -51,10 +56,11 @@ public class BingChessComponent extends ChessComponent {
         g.setColor(getChessColor().getColor());
         g.drawOval(2, 2, getWidth() - 5, getHeight() - 5);
         g.setColor(Color.BLACK);
-        g.drawString("兵", 15, 25); // FIXME: Use library to find the correct offset.
+        g.drawString(getChessColor().equals(ChessColor.BLACK)?"卒":"兵", 15, 25); // FIXME: Use library to find the correct offset.
         if (isSelected()) { // Highlights the chess if selected.
             g.setColor(Color.RED);
             g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
         }
     }
+
 }

@@ -8,30 +8,35 @@ import project.chinesechess.chessboard.ChessboardPoint;
 
 import java.awt.*;
 
-public class ShuaiChessComponent extends ChessComponent {
-    public ShuaiChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color) {
+public class ElephantChessComponent extends ChessComponent {
+    public ElephantChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color) {
         super(chessboardPoint, location, color);
     }
 
-    final private static int[] xmove=new int[]{-1,1,0,0};
-    final private static int[] ymove=new int[]{0,0,-1,1};
-
     @Override
     public boolean canMoveTo(ChessComponent[][] chessboard, ChessboardPoint destination) {
-        int desx=destination.getX();
-        int desy=destination.getY();
-        if (getChessColor().equals(ChessColor.BLACK)&&(desx>=3||desy<=2||desy>=6)) return false;
-        if (getChessColor().equals(ChessColor.RED)&&(desx<=6||desy<=2||desy>=6)) return false;
+        if (getChessColor().equals(ChessColor.BLACK)&&destination.getX()>=5) return false;
+        if (getChessColor().equals(ChessColor.RED)&&destination.getX()<=4) return false;
         ChessboardPoint source = getChessboardPoint();
+        int[] xmove=new int[]{-2,2,2,-2};
+        int[] ymove=new int[]{2,2,-2,-2};
+        int[] xblock=new int[]{-1,1,1,-1};
+        int[] yblock=new int[]{1,1,-1,-1};
         for (int i=0;i<4;i++){
             int xlo=source.getX()+xmove[i];
             int ylo=source.getY()+ymove[i];
             if (!( xlo>=0&& xlo<=9&&ylo>=0&&ylo<=8)) continue;
-            if (xlo==destination.getX() && ylo==destination.getY()){
+            if (xlo==destination.getX() && ylo==destination.getY()
+                    && chessboard[source.getX()+xblock[i]][source.getY()+yblock[i]] instanceof EmptySlotComponent){
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return getChessColor().equals(ChessColor.BLACK)?"E":"e";
     }
 
     @Override
@@ -43,7 +48,7 @@ public class ShuaiChessComponent extends ChessComponent {
         g.setColor(getChessColor().getColor());
         g.drawOval(2, 2, getWidth() - 5, getHeight() - 5);
         g.setColor(Color.BLACK);
-        g.drawString("帅", 15, 25); // FIXME: Use library to find the correct offset.
+        g.drawString("相", 15, 25); // FIXME: Use library to find the correct offset.
         if (isSelected()) { // Highlights the chess if selected.
             g.setColor(Color.RED);
             g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);

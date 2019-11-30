@@ -1,6 +1,5 @@
 package project.chinesechess.chessboard;
 
-import project.chinesechess.ChessGameFrame;
 import project.chinesechess.chess.specificchess.*;
 import project.chinesechess.listener.ChessboardChessListener;
 import project.chinesechess.chess.*;
@@ -12,7 +11,7 @@ import java.awt.*;
 public class ChessboardComponent extends JComponent {
     private ChessListener chessListener = new ChessboardChessListener(this);
     private ChessComponent[][] chessboard = new ChessComponent[10][9];
-    private ChessColor currentColor = ChessColor.BLACK;
+    private ChessColor currentColor = ChessColor.RED;
 
     public ChessboardComponent(int width, int height) {
         setLayout(null); // Use absolute layout.
@@ -38,44 +37,7 @@ public class ChessboardComponent extends JComponent {
     }
 
     private void initChessBoard(){
-        putChessOnBoard(new ChariotChessComponent(new ChessboardPoint(0,0),calculatePoint(0,0),ChessColor.BLACK));
-        putChessOnBoard(new ChariotChessComponent(new ChessboardPoint(0,8),calculatePoint(0,8),ChessColor.BLACK));
-        putChessOnBoard(new ChariotChessComponent(new ChessboardPoint(9,0),calculatePoint(9,0),ChessColor.RED));
-        putChessOnBoard(new ChariotChessComponent(new ChessboardPoint(9,8),calculatePoint(9,8),ChessColor.RED));
-
-        putChessOnBoard(new MaChessComponent(new ChessboardPoint(0,1),calculatePoint(0,1),ChessColor.BLACK));
-        putChessOnBoard(new MaChessComponent(new ChessboardPoint(0,7),calculatePoint(0,7),ChessColor.BLACK));
-        putChessOnBoard(new MaChessComponent(new ChessboardPoint(9,1),calculatePoint(9,1),ChessColor.RED));
-        putChessOnBoard(new MaChessComponent(new ChessboardPoint(9,7),calculatePoint(9,7),ChessColor.RED));
-
-        putChessOnBoard(new XiangChessComponent(new ChessboardPoint(0,2),calculatePoint(0,2),ChessColor.BLACK));
-        putChessOnBoard(new XiangChessComponent(new ChessboardPoint(0,6),calculatePoint(0,6),ChessColor.BLACK));
-        putChessOnBoard(new XiangChessComponent(new ChessboardPoint(9,2),calculatePoint(9,2),ChessColor.RED));
-        putChessOnBoard(new XiangChessComponent(new ChessboardPoint(9,6),calculatePoint(9,6),ChessColor.RED));
-
-        putChessOnBoard(new ShiChessComponent(new ChessboardPoint(0,3),calculatePoint(0,3),ChessColor.BLACK));
-        putChessOnBoard(new ShiChessComponent(new ChessboardPoint(0,5),calculatePoint(0,5),ChessColor.BLACK));
-        putChessOnBoard(new ShiChessComponent(new ChessboardPoint(9,3),calculatePoint(9,3),ChessColor.RED));
-        putChessOnBoard(new ShiChessComponent(new ChessboardPoint(9,5),calculatePoint(9,5),ChessColor.RED));
-
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(3,0),calculatePoint(3,0),ChessColor.BLACK));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(3,2),calculatePoint(3,2),ChessColor.BLACK));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(3,4),calculatePoint(3,4),ChessColor.BLACK));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(3,6),calculatePoint(3,6),ChessColor.BLACK));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(3,8),calculatePoint(3,8),ChessColor.BLACK));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(6,0),calculatePoint(6,0),ChessColor.RED));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(6,2),calculatePoint(6,2),ChessColor.RED));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(6,4),calculatePoint(6,4),ChessColor.RED));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(6,6),calculatePoint(6,6),ChessColor.RED));
-        putChessOnBoard(new BingChessComponent(new ChessboardPoint(6,8),calculatePoint(6,8),ChessColor.RED));
-
-        putChessOnBoard(new PaoChessComponent(new ChessboardPoint(2,1),calculatePoint(2,1),ChessColor.BLACK));
-        putChessOnBoard(new PaoChessComponent(new ChessboardPoint(2,7),calculatePoint(2,7),ChessColor.BLACK));
-        putChessOnBoard(new PaoChessComponent(new ChessboardPoint(7,1),calculatePoint(7,1),ChessColor.RED));
-        putChessOnBoard(new PaoChessComponent(new ChessboardPoint(7,7),calculatePoint(7,7),ChessColor.RED));
-
-        putChessOnBoard(new JiangChessComponent(new ChessboardPoint(0,4),calculatePoint(0,4),ChessColor.BLACK));
-        putChessOnBoard(new ShuaiChessComponent(new ChessboardPoint(9,4),calculatePoint(9,4),ChessColor.RED));
+        loadChessBoard("rCHEAGAEHC..........N.....N.S.S.S.S.S..................s.s.s.s.s.n.....n..........cheagaehc");
     }
 
     public void putChessOnBoard(ChessComponent chessComponent) {
@@ -139,5 +101,74 @@ public class ChessboardComponent extends JComponent {
 
     public Point calculatePoint(int row, int col) {
         return new Point(col * getWidth() / 9, row * getHeight() / 10);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder out=new StringBuilder();
+        if (currentColor.equals(ChessColor.BLACK)) out.append("b");
+        else out.append("r");
+        for (int i=0;i<10;i++)
+            for (int j=0;j<9;j++)
+                out.append(chessboard[i][j]);
+        return String.valueOf(out);
+    }
+
+    public void loadChessBoard(String chessBoard){
+        if (chessBoard.charAt(0)=='b') currentColor=ChessColor.BLACK;
+        else currentColor=ChessColor.RED;
+        for (int i=1;i<=90;i++){
+            putCharChess(chessBoard.charAt(i),(i-1)/9,(i-1)%9);
+        }
+    }
+
+    private void putCharChess(char c,int row,int column){
+        switch (c){
+            case 'a':
+                putChessOnBoard(new AdvisorChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'A':
+                putChessOnBoard(new AdvisorChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case 'c':
+                putChessOnBoard(new ChariotChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'C':
+                putChessOnBoard(new ChariotChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case 'e':
+                putChessOnBoard(new ElephantChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'E':
+                putChessOnBoard(new ElephantChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case 'g':
+                putChessOnBoard(new GeneralChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'G':
+                putChessOnBoard(new GeneralChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case 'h':
+                putChessOnBoard(new HorseChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'H':
+                putChessOnBoard(new HorseChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case 's':
+                putChessOnBoard(new SoldierChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'S':
+                putChessOnBoard(new SoldierChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case 'n':
+                putChessOnBoard(new CannonChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.RED));
+                return;
+            case 'N':
+                putChessOnBoard(new CannonChessComponent(new ChessboardPoint(row,column),calculatePoint(row,column),ChessColor.BLACK));
+                return;
+            case '.':
+                putChessOnBoard(new EmptySlotComponent(new ChessboardPoint(row,column),calculatePoint(row,column)));
+                return;
+        }
     }
 }

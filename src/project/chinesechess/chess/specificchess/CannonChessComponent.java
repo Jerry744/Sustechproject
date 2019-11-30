@@ -7,8 +7,8 @@ import project.chinesechess.chessboard.ChessboardPoint;
 
 import java.awt.*;
 
-public class PaoChessComponent extends ChessComponent {
-    public PaoChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color) {
+public class CannonChessComponent extends ChessComponent {
+    public CannonChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color) {
         super(chessboardPoint, location, color);
     }
 
@@ -69,6 +69,11 @@ public class PaoChessComponent extends ChessComponent {
                 return haveonechess;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return getChessColor().equals(ChessColor.BLACK)?"N":"n";
     }
 
     @Override

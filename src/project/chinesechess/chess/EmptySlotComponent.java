@@ -10,6 +10,11 @@ public class EmptySlotComponent extends ChessComponent {
     }
 
     @Override
+    public String toString() {
+        return ".";
+    }
+
+    @Override
     public boolean canMoveTo(ChessComponent[][] chessboard, ChessboardPoint destination) {
         return false;
     }

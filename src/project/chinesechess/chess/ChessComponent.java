@@ -80,4 +80,7 @@ public abstract class ChessComponent extends JComponent {
     public static boolean unregisterListener(ChessListener listener) {
         return listenerList.remove(listener);
     }
+
+    @Override
+    public abstract String toString();
 }

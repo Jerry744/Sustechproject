@@ -1,10 +1,8 @@
 package project.chinesechess.listener;
 
 import project.chinesechess.chess.ChessComponent;
-import project.chinesechess.chess.specificchess.JiangChessComponent;
-import project.chinesechess.chess.specificchess.ShuaiChessComponent;
+import project.chinesechess.chess.specificchess.GeneralChessComponent;
 import project.chinesechess.chessboard.ChessboardComponent;
-import project.chinesechess.ChessGameFrame;
 
 import javax.swing.*;
 
@@ -32,8 +30,6 @@ public class ChessboardChessListener extends ChessListener {
             } else if (handleSecond(chessComponent)) {
                 chessboardComponent.swapChessComponents(first, chessComponent);
 
-                if (chessComponent instanceof JiangChessComponent) JOptionPane.showConfirmDialog(null, "Red win!!");
-                if (chessComponent instanceof ShuaiChessComponent) JOptionPane.showConfirmDialog(null, "Black win!!");
 
                 chessboardComponent.swapColor();
 
